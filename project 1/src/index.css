@@ -87,11 +87,11 @@ Clicker
 
 /********************************************************
 
-Cards
+Reimbursements
 
 ********************************************************/
 
-#card-table-container {
+#reimbursements-table-container {
   width: 100%;
   padding: 2em;
   display: flex;
@@ -99,8 +99,15 @@ Cards
 }
 
 
-#card-game-dropdown {
+#reimbursements-status-dropdown {
   align-self: flex-end;
+}
+
+.form-reimbursements {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
 }
 
 /********************************************************

@@ -71,12 +71,12 @@ export class SignIn extends React.Component<RouteComponentProps, IState> {
             <form className="form-signin" onSubmit={this.submit}>
 
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-                <label htmlFor="inputUsername" className="sr-only">username</label>
+                <label htmlFor="inputUsername" className="sr-only">Username</label>
 
                 <input type="text" id="inputUsername" 
                     name="username"
                     className="form-control"
-                    placeholder="username" 
+                    placeholder="Username" 
                     onChange={this.handleChange}
                     value={this.state.credentials.username} required />
 

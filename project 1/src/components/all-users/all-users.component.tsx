@@ -5,7 +5,7 @@ interface IState {
     users: User[],
 }
 
-export default class Reimbursements extends Component<{}, IState> {
+export default class AllUsers extends Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {

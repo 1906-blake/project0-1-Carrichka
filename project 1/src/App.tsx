@@ -6,11 +6,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { NavComponent } from './components/app-nav/app-nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignIn } from './components/sign-in/signin.component';
-import Cards from './components/cards/cards.component';
-import  PendingReimbursements  from './components/pending-reimbursements/pending-reimbursements.components';
-import { ChuckNorrisComponent } from './components/norris/chucknorris.component';
+import  ReimbursementsByStatus  from './components/status-reimbursements/status-reimbursements.components';
+import { SubmitReimbursements } from './components/submit-reimbursement/submit-reimbursement.component';
 import { Pokemon } from './components/pokemon/pokemon.component';
-import { Clicker } from './components/clicker/clicker.component';
+import  ReimbursementsById  from './components/userid-reimbursements/userid-reimbursements.component';
+import Profile from './components/profile.component/profile.component';
 
 const App: React.FC = () => {
   return (
@@ -22,11 +22,11 @@ const App: React.FC = () => {
       <Route path ="/home" component = {HomeComponent}/>
       <Route path ="/sign-in" component = {SignIn}/>
       <Route path ="/allusers" component = {AllUsers}/>
+      <Route path ="/profile" component = {Profile}/>
       <Route path ="/reimbursements" component = {Reimbursements}/>
-      <Route path ="/clicker" component = {Clicker}/>
-      <Route path ="/cards" component = {Cards}/>
-      <Route path ="/pending" component = {PendingReimbursements}/>
-      <Route path ="/chuck-norris" component = {ChuckNorrisComponent}/>
+      <Route path ="/byuser" component = {ReimbursementsById}/>
+      <Route path ="/pending" component = {ReimbursementsByStatus}/>
+      <Route path ="/newrequest" component = {SubmitReimbursements}/>
       <Route path ="/pokemon" component = {Pokemon}/>
     </Switch>
     </div>
