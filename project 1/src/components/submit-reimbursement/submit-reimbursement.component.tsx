@@ -14,12 +14,10 @@ interface IState {
         type:number
     }
 
-    types: {
-        Lodging:number,
-        Travel:number,
-        Food:number,
-        Other:number
-    }
+    // types: {
+    //     name: string,
+    //     typeId: number
+    // }
 
     typeDropdown: {
         isOpen: boolean,
@@ -43,12 +41,12 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
                 type: 0
             },
 
-            types: {
-                Lodging: 1,
-                Travel: 2,
-                Food: 3,
-                Other:4
-            }, 
+            // types: {
+            //     Lodging: 1,
+            //     Travel: 2,
+            //     Food: 3,
+            //     Other:4
+            // }, 
 
             typeDropdown: {
                 isOpen: false,
