@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+
+.success-message {
+  color: green;
+  font-size: 1.5em
+}

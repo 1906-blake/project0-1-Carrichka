@@ -3,10 +3,6 @@ import Reimbursement from '../../models/reimbursement';
 
 interface IState {
     reimbursements: Reimbursement[],
-    gameDropdown: {
-        isOpen: boolean,
-        selection: string
-    }
 }
 
 export default class Reimbursements extends Component<{}, IState> {
@@ -14,10 +10,6 @@ export default class Reimbursements extends Component<{}, IState> {
         super(props);
         this.state = {
             reimbursements: [],
-            gameDropdown: {
-                isOpen: false,
-                selection: 'All'
-            }
         };
     }
 
@@ -26,16 +18,13 @@ export default class Reimbursements extends Component<{}, IState> {
     }
 
     getReimbursements = async () => {
-        const resp = await fetch('http://localhost:8012/reimbursements', {
+        const resp = await fetch('http://localhost:8012/reimbursements/author/userId/1', {
             credentials: 'include'
         });
         const reimbursementsFromServer = await resp.json();
         this.setState({
             reimbursements: reimbursementsFromServer,
-            gameDropdown: {
-                ...this.state.gameDropdown,
-                selection: 'All'
-            }
+
         });
         console.log(reimbursementsFromServer);
     }

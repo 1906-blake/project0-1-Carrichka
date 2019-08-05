@@ -56,9 +56,8 @@ reimbursementRouter.post('', async (req, res) => {
         if (!id) {
             res.sendStatus(400);
         } else {
-            submittedReimbursement.id = id;
             res.status(201); // created status code
-            res.json(submittedReimbursement);
+            res.json(id);
         }
     }
 });

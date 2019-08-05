@@ -8,7 +8,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SignIn } from './components/sign-in/signin.component';
 import  ReimbursementsByStatus  from './components/status-reimbursements/status-reimbursements.components';
 import { SubmitReimbursements } from './components/submit-reimbursement/submit-reimbursement.component';
-import { Pokemon } from './components/pokemon/pokemon.component';
 import  ReimbursementsById  from './components/userid-reimbursements/userid-reimbursements.component';
 import Profile from './components/profile.component/profile.component';
 
@@ -27,7 +26,6 @@ const App: React.FC = () => {
       <Route path ="/byuser" component = {ReimbursementsById}/>
       <Route path ="/pending" component = {ReimbursementsByStatus}/>
       <Route path ="/newrequest" component = {SubmitReimbursements}/>
-      <Route path ="/pokemon" component = {Pokemon}/>
     </Switch>
     </div>
     </BrowserRouter>

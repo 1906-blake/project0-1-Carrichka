@@ -89,11 +89,11 @@ export async function saveReimbursement(rmbrsmnt: Reimbursement) {
         const queryString = `
         INSERT INTO reimbursement (author, amount, date_submitted, date_resolved, description, resolver, status, type)
         VALUES ($1, $2, CURRENT_TIMESTAMP, null, $3, $4, $5, $6)
-        RETURNING reimbursement_id;
+        RETURNING *;
         `;
         const params = [rmbrsmnt.author, rmbrsmnt.amount, rmbrsmnt.description, rmbrsmnt.resolver, rmbrsmnt.status, rmbrsmnt.type];
         const result = await client.query(queryString, params);
-        return result.rows[0].reimbursement_id;
+        return convertSqlReimbursement(result.rows[0]);
     } catch (err) {
         console.log(err);
     } finally {

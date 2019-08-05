@@ -76,8 +76,6 @@ export class NavComponent extends React.Component {
 
                 <div className="dropdown-item"><Link to="/newrequest" className="unset-anchor nav-link active">New Request</Link></div>
 
-                <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div>
-
               </div>
 
             </li>
