@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import RevLogo from '../../assets/rev-logo.png';
+import RevLogo from '../../assets/trvlchnl-logo.png';
 
 
 
@@ -75,7 +75,7 @@ export class NavComponent extends React.Component {
                 <div className="dropdown-item"><Link to="/byuser" className="unset-anchor nav-link active">View By Employee</Link></div>
 
                 <div className="dropdown-item"><Link to="/newrequest" className="unset-anchor nav-link active">New Request</Link></div>
-
+                {/* <div className="dropdown-item"><Link to="/process" className="unset-anchor nav-link active">Process Reimbursement</Link></div> */}
               </div>
 
             </li>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Reimbursement from '../../models/reimbursement';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap';
 
 interface IState {
     reimbursements: Reimbursement[],
@@ -65,6 +65,57 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
         });
     }
 
+    approveReim = async (reimbursementId: any) => {
+        const body = {
+            reimbursementId,
+            status: {
+                statusId: 2
+            }
+ 
+        }
+        await fetch('http://localhost:8012/reimbursements', {
+            method: 'PATCH',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+        this.getReimbursements();
+    }
+
+    denyReim = async (reimbursementId: any) => {
+        const body = {
+            reimbursementId,
+            status: {
+                statusId: 3
+            }
+ 
+        }
+        await fetch('http://localhost:8012/reimbursements', {
+            method: 'PATCH',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+        this.getReimbursements();
+    }
+
+    getApDeButtons = (reimId: number, reimSta: number) => {
+        const currentUser = localStorage.getItem('user');
+        const user = currentUser && JSON.parse(currentUser);
+        const userId = user.userId;
+        console.log('userId: ' + user.userId);
+        if (user.role.roleId === 1) {
+                if (reimSta === 1) return (<td>
+                    <Button color='success' onClick={() => this.approveReim(reimId)}>Approve</Button>
+                    <Button color='warning' onClick={() => this.denyReim(reimId)}>Deny</Button>
+                </td>)
+        }
+    }
+    
     render() {
         const reimbursements = this.state.reimbursements;
         console.log(reimbursements);
@@ -119,6 +170,7 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
                                     <td>{reimbursements.resolver.firstName + ' ' + reimbursements.resolver.lastName}</td>
                                     <td>{reimbursements.status.status}</td>
                                     <td>{reimbursements.type.type}</td>
+                                    {this.getApDeButtons(reimbursements.reimbursementId, reimbursements.status.statusId)}
                                 </tr>)
                         }
                     </tbody>

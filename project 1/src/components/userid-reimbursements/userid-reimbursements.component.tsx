@@ -124,8 +124,8 @@ export default class ReimbursementsById extends Component<{}, IState> {
                         {
                             this.state.users.map(users => (
                                 <DropdownItem key={'users-dropdown-' + users.id} 
-                                            onClick={() => this.getUsersById(users)}>
-                                 {users.firstName}
+                                            onClick={() => this.getReimbursementsById(users.id)}>
+                                 {users.firstName} {users.lastName}
                                  </DropdownItem>
                             ))
                         } */}
@@ -150,8 +150,8 @@ export default class ReimbursementsById extends Component<{}, IState> {
                                 <tr key={'reimbursementId-' + reimbursements.reimbursementId}>
                                     <td>{reimbursements.author.firstName + ' ' + reimbursements.author.lastName}</td>
                                     <td>${reimbursements.amount}</td>
-                                    <td>{reimbursements.dateSubmitted}</td>
-                                    <td>{reimbursements.dateResolved && reimbursements.dateResolved}</td>
+                                    <td>{new Date(reimbursements.dateSubmitted).toDateString()}</td>
+                                    <td>{reimbursements.dateResolved && new Date(reimbursements.dateResolved).toDateString()}</td>
                                     <td>{reimbursements.description}</td>
                                     <td>{reimbursements.resolver.firstName + ' ' + reimbursements.resolver.lastName}</td>
                                     <td>{reimbursements.status.status}</td>

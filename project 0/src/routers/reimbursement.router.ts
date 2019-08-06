@@ -44,11 +44,34 @@ reimbursementRouter.get('/author/userId/:userId', async (req, res) => {
 });
 
 /**
+ * /reimbursements/author
+ * Find Reimbursement(s) by logged in user ID
+ */
+
+reimbursementRouter.get('/author', [
+
+    async (req, res) => {
+
+        if (req.session.user) {
+            console.log('req.session.user: ' + req.session.user);
+            console.log('req.session.userId: ' + req.session.user.userId);
+            const user = req.session.user.userId;
+            const foundReim = await reimbursementDao.findByAuthorId(user);
+            console.log('returned reim by author: ' + foundReim);
+            res.json(foundReim);
+        } else {
+            res.status(400);
+            res.send('Not logged in');
+        }
+    }]);
+
+/**
  * /reimbursements
  * submit reimbursement request
  */
 reimbursementRouter.post('', async (req, res) => {
     const submittedReimbursement = req.body;
+    console.log('submit', submittedReimbursement);
     if (!submittedReimbursement) {
         res.sendStatus(400);
     } else {

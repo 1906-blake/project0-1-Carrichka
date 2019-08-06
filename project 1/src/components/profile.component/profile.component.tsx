@@ -3,7 +3,15 @@ import User from '../../models/user';
 import { Button } from 'reactstrap';
 
 interface IState {
-    users: User,
+    users: {
+        id: 0,
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        role: 0
+    },
     errorMessage?: string
 }
 
@@ -18,10 +26,7 @@ export default class Profile extends Component<{}, IState> {
                 firstName: '',
                 lastName: '',
                 email: '',
-                role: {
-                    roleId: 0,
-                    role: ''
-                }
+                role: 0
             }
         };
     }
@@ -134,7 +139,7 @@ export default class Profile extends Component<{}, IState> {
                                             onChange={this.handleChange}
                                             value={this.state.users.email} required />
                                 </td>
-                                    <td>{users.role.role}</td>
+                                    <td>{'Manager'}</td>
                                 </tr>
                         }
                     </tbody>

@@ -56,6 +56,7 @@ export async function findByUsernameAndPassword(username: string, password: stri
         `;
         const result = await client.query(queryString, [username, password]);
         const sqlUser = result.rows[0]; // there should really only be 1 row at best
+        console.log('findByUsername sqlUser ' + sqlUser);
         return sqlUser && convertSqlUser(sqlUser);
     } catch (err) {
         console.log(err);

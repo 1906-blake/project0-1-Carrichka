@@ -1,9 +1,10 @@
 import React from 'react';
+import Logo from '../../assets/ExpeditionUnknown.png';
 
 export class HomeComponent extends React.Component {
     render() {
         return ( 
-            <h1>Home Component</h1>
+            <img src={Logo} alt="Logo" />
         );
     }
 }

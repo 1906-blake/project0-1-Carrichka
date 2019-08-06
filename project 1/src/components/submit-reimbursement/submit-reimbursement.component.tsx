@@ -29,7 +29,7 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
             author: [],
             newReimbursement: {
                 reimbursementId: 0,
-                author: 0,
+                author: 1,
                 amount: 0,
                 description: '',
                 resolver: 1,
@@ -56,7 +56,7 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
             }
         });
     }
-    // console.log(newReimbursement);
+    
 
     toggleTypeDropdown = () => {
         this.setState({
@@ -68,12 +68,12 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
         });
     }
 
-    selectAuthor = (event: any) => {
+    selectAuthor = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             ...this.state,
             newReimbursement: {
                 ...this.state.newReimbursement,
-                author: event.target.value
+                author: +event.target.value
             }
         })
     }
@@ -98,12 +98,12 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
                 type: +value
             }
         });
-
     }
 
     submit = async (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
+        console.log(this.state.newReimbursement);
         try {
             const resp = await fetch('http://localhost:8012/reimbursements', {
                 method: 'POST',
@@ -113,8 +113,8 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
                     'content-type': 'application/json'
                 }
             });
-
             const reimbursement = await resp.json();
+            console.log('submitted reimbursement' , reimbursement.reimbursementId);
             this.setState({
                 ...this.state,
                 successMessage: `Reimbursement ID ${reimbursement.reimbursementId} created!`
@@ -122,8 +122,9 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
 
         } catch (err) {
             console.log(err);
-            console.log('Reimbursement submition error');
+            console.log('Reimbursement submission error');
             this.setState({
+                ...this.state,
                 errorMessage: 'Reimbursement submission error'
 
             });
@@ -142,7 +143,7 @@ export class SubmitReimbursements extends React.Component<{}, IState> {
                 <Input type="select" onChange={this.selectAuthor}>
                     {
                         user.map((u: any) =>
-                            <option value={u.userId} key={'userId -' + u.username}>
+                            <option value={u.id} key={'username - ' + u.username}>
                                 {u.firstName} {u.lastName}
                             </option>
                         )
