@@ -18,7 +18,12 @@ export default class Reimbursements extends Component<{}, IState> {
     }
 
     getReimbursements = async () => {
-        const resp = await fetch('http://localhost:8012/reimbursements/author/userId/1', {
+
+        const currentUser = localStorage.getItem('user');
+        const user = currentUser && JSON.parse(currentUser);
+        const userId = user.id;
+
+        const resp = await fetch('http://localhost:8012/reimbursements/author/userId/' + userId,{
             credentials: 'include'
         });
         const reimbursementsFromServer = await resp.json();
@@ -53,8 +58,8 @@ export default class Reimbursements extends Component<{}, IState> {
                                 <tr key={'reimbursementId-' + reimbursements.reimbursementId}>
                                     <td>{reimbursements.author.firstName + ' ' + reimbursements.author.lastName}</td>
                                     <td>{reimbursements.amount}</td>
-                                    <td>{reimbursements.dateSubmitted}</td>
-                                    <td>{reimbursements.dateResolved && reimbursements.dateResolved}</td>
+                                    <td>{new Date(reimbursements.dateSubmitted).toDateString()}</td>
+                                    <td>{reimbursements.dateResolved && new Date(reimbursements.dateResolved).toDateString()}</td>
                                     <td>{reimbursements.description}</td>
                                     <td>{reimbursements.resolver.firstName + ' ' + reimbursements.resolver.lastName}</td>
                                     <td>{reimbursements.status.status}</td>

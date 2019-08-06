@@ -8,6 +8,7 @@ interface IState {
         isOpen: boolean,
         selection: string
     }
+    isAllSelect: boolean
 }
 
 export default class ReimbursementsByStatus extends Component<{}, IState> {
@@ -18,7 +19,8 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
             reimbursementsDropdown: {
                 isOpen: false,
                 selection: 'Pending'
-            }
+            },
+            isAllSelect: false
         };
     }
 
@@ -36,7 +38,8 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
             reimbursementsDropdown: {
                 ...this.state.reimbursementsDropdown,
                 selection: reimbursementsFromServer[0].status.status
-            }
+            },
+            isAllSelect: false
         });
         console.log(reimbursementsFromServer);
     }
@@ -51,7 +54,8 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
             reimbursementsDropdown: {
                 ...this.state.reimbursementsDropdown,
                 selection: 'All'
-            }
+            },
+            isAllSelect: true
         });
         console.log(reimbursementsFromServer);
     }
@@ -164,13 +168,13 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
                                 <tr key={'reimbursementId-' + reimbursements.reimbursementId}>
                                     <td>{reimbursements.author.firstName + ' ' + reimbursements.author.lastName}</td>
                                     <td>${reimbursements.amount}</td>
-                                    <td>{reimbursements.dateSubmitted}</td>
-                                    <td>{reimbursements.dateResolved && reimbursements.dateResolved}</td>
+                                    <td>{new Date(reimbursements.dateSubmitted).toDateString()}</td>
+                                    <td>{reimbursements.dateResolved && new Date(reimbursements.dateResolved).toDateString()}</td>
                                     <td>{reimbursements.description}</td>
                                     <td>{reimbursements.resolver.firstName + ' ' + reimbursements.resolver.lastName}</td>
                                     <td>{reimbursements.status.status}</td>
                                     <td>{reimbursements.type.type}</td>
-                                    {this.getApDeButtons(reimbursements.reimbursementId, reimbursements.status.statusId)}
+                                    <td hidden={this.state.isAllSelect}>{this.getApDeButtons(reimbursements.reimbursementId, reimbursements.status.statusId)}</td>
                                 </tr>)
                         }
                     </tbody>
