@@ -33,7 +33,7 @@ export async function findById(id: number) {
         INNER JOIN role USING (role_id)
         WHERE user_id = $1`, [id]);
         const sqlUser = result.rows[0];
-        console.log( 'findById sqlUser = ', sqlUser);
+        console.log('findById sqlUser = ', sqlUser);
         return sqlUser && convertSqlUser(sqlUser);
     } catch (err) {
         console.log(err);
@@ -74,17 +74,28 @@ export async function update(user: User) {
     user = {
         ...oldUser,
         ...user
-        };
+    };
     console.log('dao update user = ', user);
     let client: PoolClient;
     try {
         client = await connectionPool.connect();
-        const queryString = `
+        let queryString = '';
+        let params = [];
+        if (!user.password) {
+            queryString = `
+            UPDATE ers_user SET username = $1, first_name = $2, last_name = $3, email = $4, role_id = $5
+            WHERE user_id = $6
+            RETURNING *
+        `;
+            params = [user.username, user.firstName, user.lastName, user.email, user.role, user.id];
+        } else {
+            queryString = `
             UPDATE ers_user SET username = $1, password = $2, first_name = $3, last_name = $4, email = $5, role_id = $6
             WHERE user_id = $7
             RETURNING *
         `;
-        const params = [user.username, user.password, user.firstName, user.lastName, user.email, user.role, user.id];
+        params = [user.username, user.password, user.firstName, user.lastName, user.email, user.role, user.id];
+        }
         const result = await client.query(queryString, params);
         const sqlUser = result.rows[0];
         return convertSqlUser(sqlUser);

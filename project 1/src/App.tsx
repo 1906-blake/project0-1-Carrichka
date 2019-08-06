@@ -10,7 +10,6 @@ import  ReimbursementsByStatus  from './components/status-reimbursements/status-
 import { SubmitReimbursements } from './components/submit-reimbursement/submit-reimbursement.component';
 import  ReimbursementsById  from './components/userid-reimbursements/userid-reimbursements.component';
 import Profile from './components/profile.component/profile.component';
-// import ProcessReimbursements from './components/process-reimbursements/process-reimbursements.component';
 
 const App: React.FC = () => {
   return (
@@ -27,7 +26,7 @@ const App: React.FC = () => {
       <Route path ="/byuser" component = {ReimbursementsById}/>
       <Route path ="/pending" component = {ReimbursementsByStatus}/>
       <Route path ="/newrequest" component = {SubmitReimbursements}/>
-      {/* <Route path ="/process" component = {ProcessReimbursements}/> */}
+
     </Switch>
     </div>
     </BrowserRouter>

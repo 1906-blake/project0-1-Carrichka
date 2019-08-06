@@ -3,14 +3,15 @@ import User from '../../models/user';
 import { Button } from 'reactstrap';
 
 interface IState {
-    users: {
+    profileUser: {
         id: 0,
         username: '',
         password: '',
         firstName: '',
         lastName: '',
         email: '',
-        role: 0
+        role: 0,
+        roleName: ''
     },
     errorMessage?: string
 }
@@ -19,14 +20,15 @@ export default class Profile extends Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            users: {
+            profileUser: {
                 id: 0,
                 username: '',
                 password: '',
                 firstName: '',
                 lastName: '',
                 email: '',
-                role: 0
+                role: 0,
+                roleName: ''
             }
         };
     }
@@ -36,22 +38,56 @@ export default class Profile extends Component<{}, IState> {
     }
 
     getUsers = async () => {
-        const resp = await fetch('http://localhost:8012/users/1', {
-            credentials: 'include'
-        });
-        const usersFromServer = await resp.json();
+
+        const currentUser = localStorage.getItem('user');
+        const user = currentUser && JSON.parse(currentUser);
+
         this.setState({
-            users: usersFromServer
+            ...this.state,
+            profileUser: {
+                id: user.id,
+                username: user.username,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role.roleId,
+                roleName: user.role.role 
+            }
         });
-        console.log(usersFromServer);
-        
+
+
+        const profileUserId = user.id;
+        const profileUserUsername = user.username;
+        const profileFirstName = user.firstName;
+        const profileLastName = user.lastName;
+        const profileEmail = user.email;
+        const profileRoleId = user.role.roleId;
+        const profileRoleName = user.role.role;
+        console.log('userId: ' + profileUserId);
+
+        // const resp = await fetch('http://localhost:8012/users/1', {
+        //     credentials: 'include'
+        // });
+        // const usersFromServer = await resp.json();
+        // this.setState({
+        //     users: usersFromServer
+        // });
+        // console.log(usersFromServer);
+
     }
+
+    // componentDidUpdate(prevProps: any, prevState: any) {
+    //     if (this.state.profileUser !== prevState.profileUser) {
+    //         this.getUsers();
+    //     }
+    // }
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;
         this.setState({
-            users: {
-                ...this.state.users,
+            profileUser: {
+                ...this.state.profileUser,
                 [name]: event.target.value
             }
         });
@@ -65,7 +101,7 @@ export default class Profile extends Component<{}, IState> {
             const resp = await fetch('http://localhost:8012/users', {
                 method: 'PATCH',
                 credentials: 'include',
-                body: JSON.stringify(this.state.users),
+                body: JSON.stringify(this.state.profileUser),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -88,63 +124,63 @@ export default class Profile extends Component<{}, IState> {
     }
 
     render() {
-        const users = this.state.users;
+        const users = this.state.profileUser;
         console.log(users);
-        return ( 
+        return (
             <div>
-                
+
                 <h1 className="h3 mb-3 font-weight-normal">My Profile</h1>
                 <form className="form-profile" onSubmit={this.submit}>
-                <table className="table table-striped table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            <tr key={'usersId-' + users.id}>
-                                <td>{users.username}</td>
-                                <td>
-                                    <label htmlFor="inputFirstName" className="sr-only">First Name</label>
+                    <table className="table table-striped table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                <tr key={'usersId-' + users.id}>
+                                    <td>{this.state.profileUser.username}</td>
+                                    <td>
+                                        <label htmlFor="inputFirstName" className="sr-only">First Name</label>
 
-                                    <input type="text" id="inputFirstName" 
-                                        name="firstName"
-                                        className="form-control"
-                                        placeholder="First Name" 
-                                        onChange={this.handleChange}
-                                        value={this.state.users.firstName} required />
-                                </td>
-                                <td>
-                                    <label htmlFor="inputLastName" className="sr-only">Last Name</label>
+                                        <input type="text" id="inputFirstName"
+                                            name="firstName"
+                                            className="form-control"
+                                            placeholder="First Name"
+                                            onChange={this.handleChange}
+                                            value={this.state.profileUser.firstName} required />
+                                    </td>
+                                    <td>
+                                        <label htmlFor="inputLastName" className="sr-only">Last Name</label>
 
-                                    <input type="text" id="inputLastName" 
-                                        name="lastName"
-                                        className="form-control"
-                                        placeholder="Last Name" 
-                                        onChange={this.handleChange}
-                                        value={this.state.users.lastName} required />
-                                </td>
-                                <td>
+                                        <input type="text" id="inputLastName"
+                                            name="lastName"
+                                            className="form-control"
+                                            placeholder="Last Name"
+                                            onChange={this.handleChange}
+                                            value={this.state.profileUser.lastName} required />
+                                    </td>
+                                    <td>
                                         <label htmlFor="inputEmail" className="sr-only">Email</label>
 
-                                        <input type="text" id="inputEmail" 
+                                        <input type="text" id="inputEmail"
                                             name="email"
                                             className="form-control"
-                                            placeholder="Email" 
+                                            placeholder="Email"
                                             onChange={this.handleChange}
-                                            value={this.state.users.email} required />
-                                </td>
-                                    <td>{'Manager'}</td>
+                                            value={this.state.profileUser.email} required />
+                                    </td>
+                                    <td>{this.state.profileUser.roleName}</td>
                                 </tr>
-                        }
-                    </tbody>
-                </table>
-                <Button color="success" type="submit">Submit Update</Button>
+                            }
+                        </tbody>
+                    </table>
+                    <Button color="success" type="submit">Submit Update</Button>
                 </form>
             </div>
         );

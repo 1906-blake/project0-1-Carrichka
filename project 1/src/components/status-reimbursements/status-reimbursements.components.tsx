@@ -110,7 +110,7 @@ export default class ReimbursementsByStatus extends Component<{}, IState> {
     getApDeButtons = (reimId: number, reimSta: number) => {
         const currentUser = localStorage.getItem('user');
         const user = currentUser && JSON.parse(currentUser);
-        const userId = user.userId;
+        // const userId = user.userId;
         console.log('userId: ' + user.userId);
         if (user.role.roleId === 1) {
                 if (reimSta === 1) return (<td>
