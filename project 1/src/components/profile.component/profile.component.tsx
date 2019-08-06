@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import User from '../../models/user';
+// import User from '../../models/user';
 import { Button } from 'reactstrap';
 
 interface IState {
@@ -57,31 +57,16 @@ export default class Profile extends Component<{}, IState> {
         });
 
 
-        const profileUserId = user.id;
-        const profileUserUsername = user.username;
-        const profileFirstName = user.firstName;
-        const profileLastName = user.lastName;
-        const profileEmail = user.email;
-        const profileRoleId = user.role.roleId;
-        const profileRoleName = user.role.role;
-        console.log('userId: ' + profileUserId);
-
-        // const resp = await fetch('http://localhost:8012/users/1', {
-        //     credentials: 'include'
-        // });
-        // const usersFromServer = await resp.json();
-        // this.setState({
-        //     users: usersFromServer
-        // });
-        // console.log(usersFromServer);
+        // const profileUserId = user.id;
+        // const profileUserUsername = user.username;
+        // const profileFirstName = user.firstName;
+        // const profileLastName = user.lastName;
+        // const profileEmail = user.email;
+        // const profileRoleId = user.role.roleId;
+        // const profileRoleName = user.role.role;
+        // console.log('userId: ' + profileUserId);
 
     }
-
-    // componentDidUpdate(prevProps: any, prevState: any) {
-    //     if (this.state.profileUser !== prevState.profileUser) {
-    //         this.getUsers();
-    //     }
-    // }
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;

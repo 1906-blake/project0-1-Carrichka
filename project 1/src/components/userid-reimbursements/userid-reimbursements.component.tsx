@@ -20,13 +20,13 @@ export default class ReimbursementsById extends Component<{}, IState> {
             reimbursements: [],
             usersDropdown: {
                 isOpen: false,
-                selection: 'ID'
+                selection: 'Choose The User'
             }
         };
+        this.getUsers();
     }
 
     async componentDidMount() {
-        this.getReimbursementsById(2);
     }
 
     getUsersById = async (users: User) => {
@@ -55,7 +55,7 @@ export default class ReimbursementsById extends Component<{}, IState> {
         console.log(allUsersFromServer);
     }
 
-    getReimbursementsById = async (userId:number) => {
+    getReimbursementsById = async (userId: number) => {
         const resp = await fetch('http://localhost:8012/reimbursements/author/userId/' + userId, {
             credentials: 'include'
         });
@@ -64,9 +64,10 @@ export default class ReimbursementsById extends Component<{}, IState> {
             reimbursements: reimbursementsFromServer,
             usersDropdown: {
                 ...this.state.usersDropdown,
-                selection: reimbursementsFromServer[0].author.id
+                selection: reimbursementsFromServer[0].author.firstName + ' ' +reimbursementsFromServer[0].author.lastName
             }
         });
+
         console.log(reimbursementsFromServer);
     }
 
@@ -97,18 +98,18 @@ export default class ReimbursementsById extends Component<{}, IState> {
     render() {
         const reimbursements = this.state.reimbursements;
         console.log(reimbursements);
-        return ( 
+        return (
             <div id="reimbursements-table-container">
-            <h1 className="h3 mb-3 font-weight-normal">View Reimbursements by Employee</h1>    
+                <h1 className="h3 mb-3 font-weight-normal">View Reimbursements by Employee</h1>
                 <ButtonDropdown id="reimbursements-status-dropdown"
-                        isOpen={this.state.usersDropdown.isOpen} 
-                        toggle={this.toggleGameDropdown}>
+                    isOpen={this.state.usersDropdown.isOpen}
+                    toggle={this.toggleGameDropdown}>
 
                     <DropdownToggle caret>
                         {this.state.usersDropdown.selection}
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem key={'status-dropdown-1'} 
+                        {/* <DropdownItem key={'status-dropdown-1'} 
                                         onClick={() => this.getReimbursementsById(1)}>
                                         1 
                                         </DropdownItem>
@@ -119,21 +120,20 @@ export default class ReimbursementsById extends Component<{}, IState> {
                         <DropdownItem key={'status-dropdown-3'} 
                                         onClick={() => this.getReimbursementsById(3)}>
                                         3 
-                                        </DropdownItem>
-                        {/* <DropdownItem divider />
+                                        </DropdownItem> */}
                         {
-                            this.state.users.map(users => (
-                                <DropdownItem key={'users-dropdown-' + users.id} 
-                                            onClick={() => this.getReimbursementsById(users.id)}>
-                                 {users.firstName} {users.lastName}
-                                 </DropdownItem>
-                            ))
-                        } */}
+                            this.state.users.map(user =>
+                                <DropdownItem key={'users-dropdown-' + user.id}
+                                    onClick={() => this.getReimbursementsById(user.id)}>
+                                    {user.firstName} {user.lastName}
+                                </DropdownItem>
+                            )
+                        }
                     </DropdownMenu>
                 </ButtonDropdown>
                 <table className="table table-striped table-dark">
                     <thead>
-                    <tr>
+                        <tr>
                             <th scope="col">Author</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Date Submitted</th>
