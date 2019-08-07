@@ -14,6 +14,7 @@ interface IState {
         roleName: ''
     },
     errorMessage?: string
+    successMessage?: string
 }
 
 export default class Profile extends Component<{}, IState> {
@@ -56,16 +57,6 @@ export default class Profile extends Component<{}, IState> {
             }
         });
 
-
-        // const profileUserId = user.id;
-        // const profileUserUsername = user.username;
-        // const profileFirstName = user.firstName;
-        // const profileLastName = user.lastName;
-        // const profileEmail = user.email;
-        // const profileRoleId = user.role.roleId;
-        // const profileRoleName = user.role.role;
-        // console.log('userId: ' + profileUserId);
-
     }
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +89,11 @@ export default class Profile extends Component<{}, IState> {
 
             localStorage.setItem('user', JSON.stringify(user));
 
+            this.setState({
+                ...this.state,
+                successMessage: `Your profile has been updated`
+            })
+
         } catch (err) {
             console.log(err);
             console.log('Error updating');
@@ -115,6 +111,7 @@ export default class Profile extends Component<{}, IState> {
             <div>
 
                 <h1 className="h3 mb-3 font-weight-normal">My Profile</h1>
+                <p className="success-message">{this.state.successMessage}</p>
                 <form className="form-profile" onSubmit={this.submit}>
                     <table className="table table-striped table-dark">
                         <thead>

@@ -68,8 +68,11 @@ export class SignIn extends React.Component<RouteComponentProps, IState> {
 
     render() {
         return (
+            
             <form className="form-signin" onSubmit={this.submit}>
-
+            <h1 className="h3 mb-3 font-weight-normal">Expense Reimbursement System</h1>
+                
+                <br></br>
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                 <label htmlFor="inputUsername" className="sr-only">Username</label>
 
